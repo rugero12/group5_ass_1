@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #0095ff;
+            --light-color: #ffffff;
+            --text-color: #333333;
+            --light-gray: #f6f6f6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        #navbar {
+            background-color: var(--light-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .btn-contact {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-contact:hover {
+            background-color: #0082e6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 149, 255, 0.3);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--light-color);
+            padding: 140px 0 60px;
+            position: relative;
+            overflow: hidden;
+            height: auto;
+            min-height: 600px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-text {
+            max-width: 50%;
+            padding-right: 30px;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .header-text h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .highlight {
+            color: var(--secondary-color);
+        }
+
+        .header-text p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #0082e6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 149, 255, 0.3);
+        }
+
+        .btn-small {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-small:hover {
+            background-color: #0082e6;
+            transform: translateY(-2px);
+        }
+
+        /* Team Section */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-member {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .member-img {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .member-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-member h3 {
+            margin: 20px 0 5px;
+            font-size: 1.3rem;
+        }
+
+        .role {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .bio {
+            padding: 0 20px 20px;
+            color: #666;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .about-member {
+            padding: 25px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .about-member h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .about-member p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .skill-tag {
+            background-color: #e6f4ff;
+            color: var(--secondary-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .project-category h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .project-category h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .project {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .project-img {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project:hover .project-img img {
+            transform: scale(1.05);
+        }
+
+        .project-info {
+            padding: 20px;
+        }
+
+        .project-info h4 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .project-info p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 50px;
+        }
+
+        .contact-form h3,
+        .contact-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(0, 149, 255, 0.1);
+        }
+
+        .contact-item {
+            margin-bottom: 25px;
+        }
+
+        .contact-item h4 {
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .contact-item p {
+            color: #666;
+        }
+
+        .success-message {
+            background-color: #dff2bf;
+            color: #4f8a10;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .success-message h3 {
+            color: #4f8a10;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        /* Animation */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            .header-text {
+                max-width: 100%;
+                padding-right: 0;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                border-radius: 0 0 10px 10px;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            .header-text h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header-text h1 {
+                font-size: 1.8rem;
+            }.team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .team-member {
+                max-width: 320px;
+                margin: 0 auto;
+            }
+
+            .projects-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-img {
+                height: 200px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="container">
+            <div class="logo">Group Portfolio</div>
+            <ul class="nav-links">
+                <li><a href="#header" class="active">Home</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <header id="header">
+    <div class="container">
+        <div class="header-content">
+            <div class="header-text animate-on-scroll">
+                <span class="subtitle">Creative Team</span>
+                <h1>Welcome to Our <span class="highlight">Portfolio</span></h1>
+                <p>We are a team of talented web developers creating amazing digital experiences. Our passion is turning ideas into functional, beautiful websites.</p>
+                <a href="#about" class="btn">Learn More</a>
+            </div>
+            <div class="header-image animate-on-scroll">
+                <img src="11.jpeg" alt="Creative team at work">
+            </div>
+        </div>
+    </div>
+</header>
+    <section id="team" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Team</h2>
+            <div class="team-grid">
+                <!-- For Image 1 (person in red vest) -->
+<div class="team-member animate-on-scroll">
+    <div class="member-img">
+        <img src="felix.jpeg" alt="Jean Felix RUGERO">
+    </div>
+    <h3>Jean Felix RUGERO</h3>
+    <p class="role">Project Manager</p>
+    <p class="bio">Experienced project manager with a passion for delivering high-quality web solutions.</p>
+</div>
+
+<div class="team-member animate-on-scroll">
+    <div class="member-img">
+        <img src="Fidella.jpeg" alt="Fidella TUYIZERE">
+    </div>
+    <h3>Fidella TUYIZERE</h3>
+    <p class="role">Frontend Developer</p>
+    <p class="bio">Creative frontend developer with an eye for design and user experience.</p>
+</div>
+
+<div class="team-member animate-on-scroll">
+    <div class="member-img">
+        <img src="rukundo.png" alt="RUKUNDO Jean De Dieux">
+    </div>
+    <h3>RUKUNDO Jean De Dieux</h3>
+    <p class="role">Backend Developer</p>
+    <p class="bio">Skilled backend developer specializing in creating robust and scalable server architectures.</p>
+</div>
+
+<div class="team-member animate-on-scroll">
+    <div class="member-img">
+        <img src="grolia.jpeg" alt="Grolia USENGIMANA">
+    </div>
+    <h3>Grolia USENGIMANA</h3>
+    <p class="role">Content Creator</p>
+    <p class="bio">Skilled content creator specializing in engaging and effective communication strategies.</p>
+</div>
+
+<div class="team-member animate-on-scroll">
+    <div class="member-img">
+        <img src="Peter.jpeg" alt="Pasquale Peter OKECH">
+    </div>
+    <h3>Pasquale Peter OKECH</h3>
+    <p class="role">UI/UX Designer</p>
+    <p class="bio">Passionate designer who creates intuitive and beautiful user interfaces.</p>
+</div>
+</div>
+</section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-grid">
+                <div class="about-member animate-on-scroll">
+                    <h3>Our Mission</h3>
+                    <p>We strive to deliver exceptional web solutions that not only meet but exceed our clients' expectations. Our team combines technical expertise with creative thinking to transform ideas into reality.</p>
+                    <p>Founded in 2020, our group has successfully completed over 50 projects for clients across various industries.</p>
+                </div>
+                <div class="about-member animate-on-scroll">
+                    <h3>Our Expertise</h3>
+                    <p>Our team brings together diverse skills to offer comprehensive web development services. From concept to deployment, we handle every aspect of the project lifecycle.</p>
+                    <div class="skills">
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">UI/UX Design</span>
+                        <span class="skill-tag">Responsive Design</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">MySQL</span>
+                    </div>
+                </div>
+                <div class="about-member animate-on-scroll">
+                    <h3>Our Approach</h3>
+                    <p>We believe in a collaborative approach to web development. By working closely with our clients, we ensure that the final product aligns perfectly with their vision and business goals.</p>
+                    <p>Our development process includes thorough planning, regular updates, and comprehensive testing to deliver high-quality websites and applications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Projects</h2>
+            <div class="projects-grid">
+                <div class="project-category animate-on-scroll">
+                    <h3>Web Development</h3>
+                    <div class="project">
+                        <div class="project-img">
+                            <img src="1.jpg" alt="E-commerce Project">
+                        </div>
+                        <div class="project-info">
+                            <h4>E-commerce Platform</h4>
+                            <p>A fully responsive e-commerce website with advanced product filtering, user authentication, and payment integration.</p>
+                            <a href="#" class="btn-small">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project">
+                        <div class="project-img">
+                            <img src="3.jpeg" alt="Blog Platform">
+                        </div>
+                        <div class="project-info">
+                            <h4>Blog Platform</h4>
+                            <p>A feature-rich blog platform with content management system, user comments, and social sharing capabilities.</p>
+                            <a href="#" class="btn-small">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-category animate-on-scroll">
+                    <h3>Mobile Apps</h3>
+                    <div class="project">
+                        <div class="project-img">
+                            <img src="2.jpeg" alt="Fitness App">
+                        </div>
+                        <div class="project-info">
+                            <h4>Fitness Tracker</h4>
+                            <p>A mobile app that helps users track workouts, set goals, and monitor their fitness progress over time.</p>
+                            <a href="#" class="btn-small">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project">
+                        <div class="project-img">
+                            <img src="4.jpg" alt="Food Delivery App">
+                        </div>
+                        <div class="project-info">
+                            <h4>Food Delivery App</h4>
+                            <p>A user-friendly food delivery application with real-time order tracking and restaurant management.</p>
+                            <a href="#" class="btn-small">View Project</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-grid">
+                <div class="contact-form animate-on-scroll">
+                    <h3>Send Us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info animate-on-scroll">
+                    <h3>Get in Touch</h3>
+                    <div class="contact-item">
+                        <h4>Address</h4>
+                        <p>Musanze/Karisimbi</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Email</h4>
+                        <p>info@groupportfolio.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Phone</h4>
+                        <p>+250791089695</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Working Hours</h4>
+                        <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
+                        <p>Saturday & Sunday: Closed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Group Portfolio. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            // Mobile menu toggle
+            hamburger.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            hamburger.classList.remove('active');
+                        }
+                    }
+                });
+            });
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.backgroundColor = 'rgba(44, 62, 80, 0.95)';
+                    navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+                } else {
+                    navbar.style.backgroundColor = 'var(--light-color)';
+                    navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
+                }
+            });
+            
+            // Add active class to nav items based on scroll position
+            const sections = document.querySelectorAll('section, header');
+            const navItems = document.querySelectorAll('.nav-links a');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (window.scrollY >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navItems.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            // Scroll animation
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            
+            function checkIfInView() {
+                const windowHeight = window.innerHeight;
+                const windowTopPosition = window.scrollY;
+                const windowBottomPosition = windowTopPosition + windowHeight;
+                
+                animateElements.forEach(function(element) {
+                    const elementHeight = element.offsetHeight;
+                    const elementTopPosition = element.offsetTop;
+                    const elementBottomPosition = elementTopPosition + elementHeight;
+                    
+                    if ((elementBottomPosition >= windowTopPosition) && 
+                        (elementTopPosition <= windowBottomPosition)) {
+                        element.classList.add('animate');
+                    }
+                });
+            }
+            
+            // Check if elements are in view on page load
+            checkIfInView();
+            
+            // Check if elements are in view on scroll
+            window.addEventListener('scroll', checkIfInView);
+            
+            // Form submission handling
+            const contactForm = document.getElementById('contactForm');
+            
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Here you would typically handle form submission with AJAX
+                // For demo purposes, we'll just display a success message
+                const formContainer = contactForm.parentElement;
+                formContainer.innerHTML = `
+                    <div class="success-message">
+                        <h3>Message Sent Successfully!</h3>
+                        <p>Thank you for contacting us. We will get back to you shortly.</p>
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
